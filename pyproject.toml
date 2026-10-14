@@ -1,0 +1,10 @@
+[project]
+name = "python-club-website"
+version = "0.1.0"
+description = "Python Innovation Club website — VMKVEC Salem"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+package = false

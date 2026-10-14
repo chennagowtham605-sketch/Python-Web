@@ -1,0 +1,122 @@
+{
+  "pillars": [
+    {
+      "name": "Learn",
+      "color": "#1e6fe0",
+      "description": "Build strong technical foundations in Python, AI, machine learning, and data science.",
+      "activities": ["Python workshops", "Coding practice", "AI and ML workshops", "Expert talks", "Certification programs"],
+      "outcome": "Technical knowledge and computational thinking"
+    },
+    {
+      "name": "Build",
+      "color": "#1f9d55",
+      "description": "Turn ideas into working applications and prototypes.",
+      "activities": ["Mini projects", "Flask and Django projects", "Data analytics projects", "GitHub projects"],
+      "outcome": "Project development and implementation skills"
+    },
+    {
+      "name": "Innovate",
+      "color": "#7a3fd1",
+      "description": "Create intelligent solutions to real-world problems.",
+      "activities": ["Innovation challenges", "Hackathons", "Problem of the month", "AI challenges", "Research activities"],
+      "outcome": "Creativity, critical thinking, and innovation"
+    },
+    {
+      "name": "Collaborate",
+      "color": "#f07a1a",
+      "description": "Learn and create together as a student community.",
+      "activities": ["Peer coding", "Coding competitions", "Mentoring", "Team projects", "Open-source activities"],
+      "outcome": "Teamwork, leadership, and communication"
+    },
+    {
+      "name": "Impact",
+      "color": "#0f9d9a",
+      "description": "Use technology for ethical, sustainable, and socially meaningful work.",
+      "activities": ["Smart campus projects", "Green technology", "Healthcare AI", "Social good projects", "Innovation exhibitions"],
+      "outcome": "Social responsibility and real-world impact"
+    }
+  ],
+  "events": [
+    {
+      "title": "Python 100",
+      "description": "The first event of the Python Club.",
+      "date": "2025",
+      "venue": "HITECH 2",
+      "status": "ended",
+      "image": "/images/python-100-poster.jpg"
+    },
+    {
+      "title": "Week one Pyquest 2026",
+      "description": "Week one of Pyquest 2026.",
+      "date": "16/10/2026",
+      "venue": "AILAB",
+      "image": "/images/week-one-pyquest-2026.jpg"
+    }
+  ],
+  "projects": [
+    {
+      "title": "AI Resume Analyzer",
+      "description": "Use AI to review resumes, highlight relevant skills, and suggest ways to improve them.",
+      "image": "/images/projects/AI%20Resume%20Analyzer.jpg"
+    },
+    {
+      "title": "Eco Sort",
+      "description": "Help people sort waste correctly by identifying recyclable and non-recyclable items.",
+      "image": "/images/projects/Eco%20sort.jpg"
+    },
+    {
+      "title": "Plant Disease Detection",
+      "description": "Analyze plant images to spot common diseases early and support healthier crops.",
+      "image": "/images/projects/plant%20disease%20Detection.jpg"
+    },
+    {
+      "title": "Smart Study Buddy",
+      "description": "Support learning with organized study materials, revision plans, and helpful practice.",
+      "image": "/images/projects/Smart%20Study%20Buddy.jpg"
+    },
+    {
+      "title": "Smart Traffic Management System",
+      "description": "Use traffic data to understand congestion and improve traffic flow at busy junctions.",
+      "image": "/images/projects/Smart%20Traffic%20Management%20System.jpg"
+    }
+  ],
+  "team": {
+    "studentMembers": [
+      {"role": "President", "name": "Mohammed Raihan M", "department": "School of Computer Science", "image": "/images/team/Mo.png"},
+      {"role": "Vice President", "name": "IYAPPAN S", "department": "School of Computer Science", "image": "/images/team/Iyappan%20s.png"},
+      {"role": "Secretary", "name": "VIJAYAPRASATH R", "department": "School of Computer Science", "image": "/images/team/Vijaya%20prasad%20R.png"},
+      {"role": "JOIN SECRETARY", "name": "MADAN KUMAR M", "department": "School of Computer Science", "image": "/images/team/Madhan%20kumar.png"},
+      {"role": "PROJECT LEAD", "name": "PRADEEP KUMAR S", "department": "School of Computer Science", "image": "/images/team/Pradeep%20kumar.jpeg"},
+      {"role": "DESIGN & CREATIVE TEAM", "name": "POORANA SHRI S", "department": "School of Computer Science", "image": "/images/team/Poorana%20shri.png"},
+      {"role": "MEMBERSHIP COORDINATOR", "name": "YUVARANI S","department": "School of Computer Science", "image": "/images/team/Yuvarani.jpg"},
+      {"role": "WEB DEVELOPMENT TEAM", "name": "GOWTHAM C", "department": "School of Computer Science", "image": "/images/team/Gowtham%20C.jpg"},
+      {"role": "SOCIAL MEDIA & CONTENT TEAM", "name": "JASWANTH S", "department": "School of Computer Science", "image": "/images/team/Jaswanth%20S.jpeg"},
+      {"role": "TECHNICAL TEAM MEMBER", "name": "RAVI KUMAR", "department": "School of Computer Science", "image": "/images/team/Ravi%20kumar.jpg"},
+      {"role": "PUBLICITY & OUTREACH TEAM", "name": "REVATHI G", "department": "School of Computer Science", "image": "/images/team/Revathi%20G.jpg"},
+      {"role": "CODING & COMPETITION TEAM", "name": "NIRANJANA S", "department": "School of Computer Science", "image": "/images/team/Niranjana%20S.png"}
+    ],
+    "facultyMembers": [
+      {"role": "Faculty Member", "name": "Dr. Amirthalingam V", "department": "School of Computer Science", "image": "/images/faculty/Amirthalingam_V.jpg"},
+      {"role": "Faculty Member", "name": " Dr. Senthilkumar S ", "department": "School of Computer Science", "image": "/images/faculty/Senthilkumar_s.jpg"},
+      {"role": "Faculty Member", "name": "Dr. Rajanarayanan S  ", "department": "School of Computer Science", "image": "/images/faculty/Rajanarayanan_S.jpg"},
+      {"role": "Faculty Member", "name": " Dr. G. Karthik ", "department": "School of Computer Science", "image": "/images/faculty/Karthik%20G.jpg"},
+      {"role": "Faculty Member", "name": "Mrs. Geetha T.", "department": "School of Computer Science", "image": "/images/faculty/Geetha_T.jpg"},
+      {"role": "Faculty Member", "name": "Mr. Shriidhar PJ  ", "department": "School of Computer Science", "image": "/images/faculty/Shriidhar_PJ.jpg"},
+      {"role": "Faculty Member", "name": " Mr. Loganathan S ", "department": "School of Computer Science", "image": "/images/faculty/Loganathan_S.jpg"},
+      {"role": "Faculty Member", "name": " Mrs. Mahalakshmi R ", "department": "School of Computer Science", "image": "/images/faculty/Mahalakshmi_R.jpg"},
+      {"role": "Faculty Member", "name": " Mr. Jagadeeswaran M ", "department": "School of Computer Science", "image": "/images/faculty/Jagadeeswaran_M.jpg"},
+      {"role": "Faculty Member", "name": "Mr. Suresh M  ", "department": "School of Computer Science", "image": "/images/faculty/Suresh_M.jpg"},
+      {"role": "Faculty Member", "name": " Mrs. Kasthuri A ", "department": "School of Computer Science", "image": "/images/faculty/kasthuri_A.jpg"},
+      {"role": "Faculty Member", "name": "Mr. Rajasekar G", "department": "School of Computer Science", "image": "/images/faculty/Rajasekar_G.jpg"},
+      {"role": "Faculty Member", "name": " Mr. Gnanavel N ", "department": "School of Computer Science", "image": "/images/faculty/Gnanavel_N.jpg"},
+      {"role": "Faculty Member", "name": " Mr. Tamilazhagan ", "department": "School of Computer Science", "image": "/images/faculty/Tamilzhagan.jpg"},
+      {"role": "Faculty Member", "name": "Mrs. Subbulakshmi ", "department": "School of Computer Science", "image": "/images/faculty/Subbulakshmi.jpg"},
+      {"role": "Faculty Member", "name": "Mr. Manoj Kumar", "department": "School of Computer Science", "image": "/images/faculty/Manoj%20kumar.jpg"},
+      {"role": "Faculty Member", "name": "Mrs. Muthunangai ", "department": "School of Computer Science", "image": "/images/faculty/Muthunagai.jpg"},
+      {"role": "Faculty Member", "name": " Miss. Rajeswari  ", "department": "School of Computer Science", "image": "/images/faculty/Rajaeswari.jpg"},
+      {"role": "Faculty Member", "name": " Miss. Ilakiya  ", "department": "School of Computer Science", "image": "/images/faculty/Ilakiya.png"},
+      {"role": "Faculty Member", "name": " Mr. Shrinivas", "department": "School of Computer Science", "image": "/images/faculty/Shrinivas.jpg"},
+      {"role": "Faculty Member", "name": "  Mr.J.Dhayalan ", "department": "School of Computer Science", "image": "/images/faculty/J.Dhayalan.jpg"}
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/admin/", "destination": "/admin.html" },
+    { "source": "/site", "destination": "/python-innovation-club.html" },
+    { "source": "/home", "destination": "/python-innovation-club.html" },
+    { "source": "/", "destination": "/python-innovation-club.html" }
+  ]
+}

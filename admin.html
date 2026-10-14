@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Management & Admin | Python Innovation Club</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f4f7fc;--surface:#ffffff;--ink:#0b1b4a;--muted:#5a6b99;--line:#d5dded;
+  --navy:#0a1f5c;--navy-dark:#06133b;--yellow:#ffe600;--c1:#1e6fe0;--c2:#1f9d55;
+  --c3:#7a3fd1;--c4:#f07a1a;--danger:#d92d20;--danger-bg:#fee4e2;
+  font-family:"IBM Plex Sans",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg)}
+header{background:linear-gradient(135deg,var(--navy),var(--navy-dark));color:#fff;padding:16px 24px;border-bottom:1px solid #23387a}
+header .wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.15rem;display:flex;align-items:center;gap:10px}
+header a.back-link{color:#c9d5ff;text-decoration:none;font-size:.9rem;padding:6px 12px;border:1px solid #3b508f;border-radius:6px;transition:all .2s}
+header a.back-link:hover{background:rgba(255,255,255,.1);color:#fff}
+main{max-width:1200px;margin:32px auto;padding:0 20px}
+h1,h2,h3{font-family:"Bricolage Grotesque",sans-serif;line-height:1.2;margin:0 0 .5em}
+h1{font-size:1.8rem;font-weight:800}
+h2{font-size:1.35rem;font-weight:700}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:24px;box-shadow:0 4px 12px rgba(10,31,92,.04)}
+form{display:grid;gap:16px;max-width:440px}
+label{display:grid;gap:6px;font-size:.92rem;font-weight:500;color:var(--ink)}
+input,select{font:inherit;padding:11px 14px;border:1px solid #b6c4df;border-radius:8px;background:var(--surface);color:var(--ink)}
+input:focus,select:focus{outline:3px solid var(--c1);outline-offset:1px}
+button{font:inherit;font-weight:500;padding:10px 18px;border:0;border-radius:8px;cursor:pointer;transition:all .15s ease}
+button.btn-primary{background:var(--yellow);color:var(--navy);font-weight:600}
+button.btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+button.btn-secondary{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+button.btn-secondary:hover{border-color:var(--c1);color:var(--c1)}
+button.btn-danger{background:transparent;border:1px solid #fecdca;color:var(--danger);padding:6px 12px;font-size:.84rem;border-radius:6px}
+button.btn-danger:hover{background:var(--danger-bg);border-color:var(--danger)}
+button.btn-export{background:rgba(30,111,224,.08);border:1px solid rgba(30,111,224,.3);color:var(--c1);font-size:.88rem;padding:7px 14px}
+button.btn-export:hover{background:var(--c1);color:#fff}
+button:disabled{opacity:.6;cursor:wait;transform:none}
+.status{min-height:1.5em;margin:8px 0;font-size:.9rem}
+.status.error{color:var(--danger);font-weight:500}
+.status.success{color:var(--c2);font-weight:500}
+
+/* Dashboard Summary & Controls */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}
+.stat-box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 22px;position:relative;overflow:hidden}
+.stat-box::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+.stat-box:nth-child(1)::before{background:var(--c1)}
+.stat-box:nth-child(2)::before{background:var(--c2)}
+.stat-box:nth-child(3)::before{background:var(--c3)}
+.stat-num{font-family:"Bricolage Grotesque",sans-serif;font-size:2rem;font-weight:800;color:var(--ink);line-height:1}
+.stat-desc{font-size:.88rem;color:var(--muted);margin-top:6px}
+
+.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:18px 22px}
+.toolbar p{margin:0;font-weight:500}
+.toolbar-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+.filter-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.search-input{flex:1;min-width:240px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font:inherit}
+.filter-select{min-width:180px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font:inherit}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;text-align:left;font-size:.92rem}
+thead{background:#edf2fa;color:var(--ink)}
+th,td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;white-space:nowrap}
+tr:nth-child(even){background:rgba(244,247,252,.5)}
+tr:hover{background:rgba(30,111,224,.03)}
+.badge-tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.78rem;font-weight:600;border:1px solid transparent}
+.badge-blue{background:rgba(30,111,224,.1);color:var(--c1);border-color:rgba(30,111,224,.2)}
+.badge-green{background:rgba(31,157,85,.1);color:var(--c2);border-color:rgba(31,157,85,.2)}
+.badge-purple{background:rgba(122,63,209,.1);color:var(--c3);border-color:rgba(122,63,209,.2)}
+.table-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+
+[hidden]{display:none!important}
+@media (max-width:768px){
+  main{padding:0 14px;margin:20px auto}
+  .toolbar{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+  <strong>🐍 Python Innovation Club — Student Management Portal</strong>
+  <a class="back-link" href="/" target="_blank">View Public Site ↗</a>
+</div>
+</header>
+
+<main>
+<section class="card" id="loginPanel">
+<h1>Website handler sign in</h1>
+<p style="color:var(--muted);max-width:540px;margin-top:0">Sign in to view the club-join applications and event registrations. Members do not need this page to register.</p>
+<form id="loginForm">
+<label>Username<input name="email" autocomplete="username" placeholder="e.g. admin" required></label>
+<label>Password<input name="password" type="password" autocomplete="current-password" placeholder="Handler private token" required></label>
+<p class="status" id="loginStatus" role="status" aria-live="polite"></p>
+<button class="btn-primary" type="submit">Sign in to Dashboard</button>
+</form>
+</section>
+
+<section id="dashboard" hidden>
+<div class="card toolbar">
+  <p id="welcome"></p>
+  <div class="toolbar-actions">
+    <button class="btn-secondary" id="refreshButton" type="button">🔄 Refresh Data</button>
+    <button class="btn-secondary" id="logoutButton" type="button">Sign out</button>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-box">
+    <div class="stat-num" id="statEventsCount">0</div>
+    <div class="stat-desc">Event Registrations</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" id="statJoinsCount">0</div>
+    <div class="stat-desc">Club Join Applications</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" id="statUniqueCount">0</div>
+    <div class="stat-desc">Total Active Students</div>
+  </div>
+</div>
+
+<section class="card">
+<div class="table-header-row">
+  <div>
+    <h2>Event Registrations Management</h2>
+    <p style="margin:0;font-size:.88rem;color:var(--muted)">View, filter, search, export, or remove student event registrations.</p>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <button class="btn-export" id="exportEventsCsv" type="button">📥 Export CSV</button>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <input class="search-input" id="searchEvents" type="search" placeholder="Search by student name or email...">
+  <select class="filter-select" id="filterEventSelect">
+    <option value="">All Events</option>
+  </select>
+</div>
+
+<p class="status" id="eventStatus" role="status" aria-live="polite"></p>
+<div class="table-wrap" id="eventList"></div>
+</section>
+
+<section class="card">
+<div class="table-header-row">
+  <div>
+    <h2>Club Join Applications</h2>
+    <p style="margin:0;font-size:.88rem;color:var(--muted)">Applications from students across engineering departments who applied to join the club.</p>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <button class="btn-export" id="exportJoinsCsv" type="button">📥 Export CSV</button>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <input class="search-input" id="searchJoins" type="search" placeholder="Search by student name, email, department, or interest...">
+</div>
+
+<p class="status" id="joinStatus" role="status" aria-live="polite"></p>
+<div class="table-wrap" id="joinList"></div>
+</section>
+</section>
+</main>
+
+<script>
+var loginPanel=document.getElementById("loginPanel"),dashboard=document.getElementById("dashboard");
+var rawApplications=[],rawRegistrations=[];
+
+async function apiRequest(path,options){
+ options=options||{};options.headers=Object.assign({},options.headers||{});
+ if(options.body)options.headers["Content-Type"]="application/json";
+ var response=await fetch(path,options);
+ var data=response.status===204?{}:await response.json();
+ if(!response.ok)throw new Error(data.error||"Request failed.");
+ return data;
+}
+
+function formatDate(isoStr){
+ if(!isoStr)return "—";
+ try{
+  var d=new Date(isoStr);
+  if(isNaN(d.getTime()))return isoStr;
+  return d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})+" "+d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+ }catch(e){return isoStr}
+}
+
+function escapeCsvCell(text){
+ if(text==null)return "";
+ var str=String(text).replace(/"/g,'""');
+ return '"'+str+'"';
+}
+
+function downloadCsv(filename,headers,rows){
+ var csv=[headers.map(escapeCsvCell).join(",")];
+ rows.forEach(function(row){
+  csv.push(row.map(escapeCsvCell).join(","));
+ });
+ var blob=new Blob([csv.join("\r\n")],{type:"text/csv;charset=utf-8;"});
+ var link=document.createElement("a");
+ link.href=URL.createObjectURL(blob);
+ link.download=filename;
+ document.body.appendChild(link);
+ link.click();
+ document.body.removeChild(link);
+}
+
+function renderTable(containerId,columns,rows,emptyText,onDelete){
+ var container=document.getElementById(containerId);
+ container.replaceChildren();
+ if(!rows.length){
+  var empty=document.createElement("p");
+  empty.style.padding="24px";
+  empty.style.color="var(--muted)";
+  empty.textContent=emptyText;
+  container.appendChild(empty);
+  return;
+ }
+ var table=document.createElement("table");
+ var head=document.createElement("thead"),headerRow=document.createElement("tr");
+ columns.forEach(function(column){
+  var cell=document.createElement("th");cell.scope="col";cell.textContent=column.label;headerRow.appendChild(cell);
+ });
+ if(onDelete){
+  var actCol=document.createElement("th");actCol.scope="col";actCol.textContent="Actions";headerRow.appendChild(actCol);
+ }
+ head.appendChild(headerRow);table.appendChild(head);
+ var body=document.createElement("tbody");
+ rows.forEach(function(row,idx){
+  var tr=document.createElement("tr");
+  columns.forEach(function(column){
+   var cell=document.createElement("td");
+   var val=row[column.key];
+   if(column.key==="registered_at"||column.key==="submitted_at"){
+    cell.textContent=formatDate(val);
+   }else if(column.key==="year"||column.key==="department"){
+    var badge=document.createElement("span");
+    badge.className="badge-tag "+(column.key==="year"?"badge-blue":"badge-purple");
+    badge.textContent=val||"—";
+    cell.appendChild(badge);
+   }else if(column.key==="event"){
+    var badge=document.createElement("span");
+    badge.className="badge-tag badge-green";
+    badge.textContent=val||"—";
+    cell.appendChild(badge);
+   }else{
+    cell.textContent=val==null?"":String(val);
+   }
+   tr.appendChild(cell);
+  });
+  if(onDelete){
+   var actCell=document.createElement("td");
+   var delBtn=document.createElement("button");
+   delBtn.type="button";delBtn.className="btn-danger";
+   delBtn.textContent="🗑️ Remove";
+   delBtn.onclick=function(){onDelete(row)};
+   actCell.appendChild(delBtn);
+   tr.appendChild(actCell);
+  }
+  body.appendChild(tr);
+ });
+ table.appendChild(body);
+ container.appendChild(table);
+}
+
+function updateStats(){
+ document.getElementById("statEventsCount").textContent=rawRegistrations.length;
+ document.getElementById("statJoinsCount").textContent=rawApplications.length;
+ var emails=new Set();
+ rawRegistrations.forEach(function(r){if(r.email)emails.add(r.email.toLowerCase())});
+ rawApplications.forEach(function(a){if(a.email)emails.add(a.email.toLowerCase())});
+ document.getElementById("statUniqueCount").textContent=emails.size;
+}
+
+function updateEventFilterOptions(){
+ var select=document.getElementById("filterEventSelect");
+ var currentVal=select.value;
+ var events=Array.from(new Set(rawRegistrations.map(function(r){return r.event}).filter(Boolean))).sort();
+ select.innerHTML='<option value="">All Events ('+rawRegistrations.length+')</option>';
+ events.forEach(function(ev){
+  var count=rawRegistrations.filter(function(r){return r.event===ev}).length;
+  var opt=document.createElement("option");
+  opt.value=ev;opt.textContent=ev+" ("+count+")";
+  select.appendChild(opt);
+ });
+ select.value=currentVal;
+}
+
+function filterAndRenderRegistrations(){
+ var q=(document.getElementById("searchEvents").value||"").trim().toLowerCase();
+ var selectedEv=document.getElementById("filterEventSelect").value;
+ var filtered=rawRegistrations.filter(function(r){
+  var matchQ=!q||(r.name&&r.name.toLowerCase().includes(q))||(r.email&&r.email.toLowerCase().includes(q));
+  var matchEv=!selectedEv||r.event===selectedEv;
+  return matchQ&&matchEv;
+ });
+ renderTable("eventList",[
+  {label:"Event Name",key:"event"},
+  {label:"Student Name",key:"name"},
+  {label:"Email",key:"email"},
+  {label:"Registration Date",key:"registered_at"}
+ ],filtered,"No matching event registrations found.",async function(row){
+  if(confirm("Are you sure you want to remove the registration of "+row.name+" ("+row.email+") for '"+row.event+"'?")){
+   try{
+    await apiRequest("/api/events/registrations?event="+encodeURIComponent(row.event)+"&email="+encodeURIComponent(row.email),{method:"DELETE"});
+    await loadLists();
+   }catch(err){
+    alert("Error deleting registration: "+err.message);
+   }
+  }
+ });
+}
+
+function filterAndRenderJoins(){
+ var q=(document.getElementById("searchJoins").value||"").trim().toLowerCase();
+ var filtered=rawApplications.filter(function(a){
+  return !q||(a.name&&a.name.toLowerCase().includes(q))||
+             (a.email&&a.email.toLowerCase().includes(q))||
+             (a.department&&a.department.toLowerCase().includes(q))||
+             (a.interest&&a.interest.toLowerCase().includes(q));
+ });
+ renderTable("joinList",[
+  {label:"Student Name",key:"name"},
+  {label:"Email",key:"email"},
+  {label:"Year",key:"year"},
+  {label:"Department",key:"department"},
+  {label:"Interest / Project Idea",key:"interest"},
+  {label:"Submitted At",key:"submitted_at"}
+ ],filtered,"No matching club-join applications found.",async function(row){
+  if(confirm("Are you sure you want to remove the join application for "+row.name+" ("+row.email+")?")){
+   try{
+    await apiRequest("/api/admin/joins?email="+encodeURIComponent(row.email),{method:"DELETE"});
+    await loadLists();
+   }catch(err){
+    alert("Error deleting application: "+err.message);
+   }
+  }
+ });
+}
+
+function setAdmin(user){
+ loginPanel.hidden=Boolean(user);dashboard.hidden=!user;
+ if(user)document.getElementById("welcome").textContent="Welcome, "+user.name+" ("+user.email+"). Manage club registrations & applications below.";
+}
+
+async function loadLists(){
+ document.getElementById("joinStatus").textContent="Loading applications...";
+ document.getElementById("eventStatus").textContent="Loading registrations...";
+ try{
+  var results=await Promise.all([apiRequest("/api/admin/joins"),apiRequest("/api/events/registrations")]);
+  rawApplications=results[0].applications||[];
+  rawRegistrations=results[1].registrations||[];
+  document.getElementById("joinStatus").textContent="";
+  document.getElementById("eventStatus").textContent="";
+  updateStats();
+  updateEventFilterOptions();
+  filterAndRenderRegistrations();
+  filterAndRenderJoins();
+ }catch(error){
+  document.getElementById("joinStatus").className="status error";
+  document.getElementById("eventStatus").className="status error";
+  document.getElementById("joinStatus").textContent=error.message;
+  document.getElementById("eventStatus").textContent=error.message;
+  setAdmin(null);
+ }
+}
+
+document.getElementById("searchEvents").addEventListener("input",filterAndRenderRegistrations);
+document.getElementById("filterEventSelect").addEventListener("change",filterAndRenderRegistrations);
+document.getElementById("searchJoins").addEventListener("input",filterAndRenderJoins);
+
+document.getElementById("exportEventsCsv").addEventListener("click",function(){
+ if(!rawRegistrations.length){alert("No registrations to export.");return}
+ var rows=rawRegistrations.map(function(r){return [r.event,r.name,r.email,r.registered_at]});
+ downloadCsv("python_club_event_registrations.csv",["Event","Student Name","Email","Registration Timestamp"],rows);
+});
+
+document.getElementById("exportJoinsCsv").addEventListener("click",function(){
+ if(!rawApplications.length){alert("No applications to export.");return}
+ var rows=rawApplications.map(function(a){return [a.name,a.email,a.year,a.department,a.interest,a.submitted_at]});
+ downloadCsv("python_club_join_applications.csv",["Student Name","Email","Year","Department","Interest","Submitted Timestamp"],rows);
+});
+
+document.getElementById("loginForm").addEventListener("submit",async function(event){
+ event.preventDefault();var form=event.currentTarget,status=document.getElementById("loginStatus"),button=form.querySelector("button");
+ status.className="status";status.textContent="Signing in...";button.disabled=true;
+ try{
+  var result=await apiRequest("/api/login",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form).entries()))});
+  if(!result.user||result.user.role!=="admin")throw new Error("Website handler access required.");
+  form.reset();status.textContent="";setAdmin(result.user);await loadLists();
+ }catch(error){
+  status.className="status error";status.textContent=error.message;
+ }finally{button.disabled=false}
+});
+
+document.getElementById("refreshButton").addEventListener("click",loadLists);
+document.getElementById("logoutButton").addEventListener("click",async function(){
+ try{await apiRequest("/api/logout",{method:"POST"});setAdmin(null)}
+ catch(error){window.alert(error.message)}
+});
+
+apiRequest("/api/me").then(function(result){
+ if(result.user&&result.user.role==="admin"){setAdmin(result.user);loadLists()}
+}).catch(function(error){
+ var status=document.getElementById("loginStatus");status.className="status error";status.textContent=error.message;
+});
+</script>
+</body>
+</html>
