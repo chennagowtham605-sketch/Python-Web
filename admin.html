@@ -78,13 +78,35 @@ tr:hover{background:rgba(30,111,224,.03)}
   main{padding:0 14px;margin:20px auto}
   .toolbar{flex-direction:column;align-items:flex-start}
 }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#071440;--surface:#0e2260;--ink:#eef2ff;--muted:#aab8e6;--line:#24387f;
+    --navy-dark:#030a21;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#071440;--surface:#0e2260;--ink:#eef2ff;--muted:#aab8e6;--line:#24387f;
+  --navy-dark:#030a21;
+}
+:root[data-theme="dark"] thead{background:#132a75;color:#eef2ff}
+:root[data-theme="dark"] tr:nth-child(even){background:rgba(255,255,255,.03)}
+:root[data-theme="dark"] tr:hover{background:rgba(30,111,224,.15)}
+:root[data-theme="dark"] input, :root[data-theme="dark"] select{background:#0a1f5c;color:#eef2ff;border-color:#24387f}
+:root[data-theme="dark"] .stat-num{color:#eef2ff}
+:root[data-theme="dark"] label{color:#eef2ff}
+:root[data-theme="dark"] button.btn-secondary{background:#0e2260;border-color:#24387f;color:#eef2ff}
+.theme-toggle{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.05rem;padding:6px 10px;border-radius:8px;cursor:pointer;line-height:1;display:inline-flex;align-items:center;justify-content:center;transition:all .2s ease}
+.theme-toggle:hover{background:rgba(255,255,255,.25);border-color:var(--yellow)}
 </style>
 </head>
 <body>
 <header>
 <div class="wrap">
   <strong>🐍 Python Innovation Club — Student Management Portal</strong>
-  <a class="back-link" href="/" target="_blank">View Public Site ↗</a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <a class="back-link" href="/" target="_blank">View Public Site ↗</a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌓</button>
+  </div>
 </div>
 </header>
 
@@ -408,6 +430,22 @@ apiRequest("/api/me").then(function(result){
 }).catch(function(error){
  var status=document.getElementById("loginStatus");status.className="status error";status.textContent=error.message;
 });
+(function(){
+ var toggle=document.getElementById("themeToggle");
+ function getTheme(){return localStorage.getItem("pic_theme")||(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}
+ function applyTheme(t){
+  document.documentElement.setAttribute("data-theme",t);
+  localStorage.setItem("pic_theme",t);
+  if(toggle)toggle.textContent=t==="dark"?"☀️":"🌙";
+ }
+ applyTheme(getTheme());
+ if(toggle){
+  toggle.addEventListener("click",function(){
+   var cur=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+   applyTheme(cur);
+  });
+ }
+})();
 </script>
 </body>
 </html>
