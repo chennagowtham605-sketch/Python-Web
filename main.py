@@ -17,18 +17,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parent
 SITE = "python-innovation-club.html"
-
-# On serverless platforms (e.g. Vercel), only /tmp is writable.
-if os.environ.get("VERCEL"):
-    DATA_DIR = Path("/tmp/data")
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for _fname in ("club_content.json", "join_applications.json", "event_registrations.json"):
-        _src = ROOT / "data" / _fname
-        _dst = DATA_DIR / _fname
-        if _src.exists() and not _dst.exists():
-            shutil.copy2(_src, _dst)
-else:
-    DATA_DIR = ROOT / "data"
+DATA_DIR = Path(os.environ.get("DATA_DIR", ROOT / "data"))
 
 JOIN_FILE = DATA_DIR / "join_applications.json"
 EVENT_REGISTRATIONS_FILE = DATA_DIR / "event_registrations.json"
@@ -105,8 +94,8 @@ PUBLIC_IMAGE_FILES = {
     **FACULTY_PHOTO_FILES,
     **PROJECT_IMAGE_FILES,
 }
-HOST = "127.0.0.1"
-PORT = 8080
+HOST = os.environ.get("HOST", "0.0.0.0")
+PORT = int(os.environ.get("PORT", "8080"))
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 SESSION_SECONDS = 12 * 60 * 60
@@ -409,7 +398,7 @@ class ClubSiteHandler(SimpleHTTPRequestHandler):
                     return
                 self._json(200, {"registrations": registrations})
                 return
-        if path in ("/", "/index.html"):
+        if path in ("/", "/index.html", "/python-innovation-club.html"):
             self.path = f"/{SITE}"
         elif path in ("/site", "/home"):
             self.path = f"/{SITE}"
