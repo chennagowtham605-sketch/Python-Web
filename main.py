@@ -52,6 +52,7 @@ FACULTY_PHOTO_FILES = {
     f"/images/faculty/{filename}": ROOT / "images" / "faculty" / filename
     for filename in (
         "Amirthalingam_V.jpg",
+        "Nithya_M.jpg",
         "Geetha_T.jpg",
         "Gnanavel_N.jpg",
         "J.Dhayalan.jpg",

@@ -50,6 +50,7 @@
       "description": "Week one of Pyquest 2026.",
       "date": "16/10/2026",
       "venue": "AILAB",
+      "status": "ended",
       "image": "/images/week-one-pyquest-2026.jpg"
     }
   ],
@@ -96,6 +97,7 @@
       {"role": "CODING & COMPETITION TEAM", "name": "NIRANJANA S", "department": "School of Computer Science", "image": "/images/team/Niranjana%20S.png"}
     ],
     "facultyMembers": [
+      {"role": "Head of the Depertment", "name": "Dr. Nithya M", "department": "School of Computer Science", "image": "/images/faculty/Nithya_M.jpg"},
       {"role": "Faculty Member", "name": "Dr. Amirthalingam V", "department": "School of Computer Science", "image": "/images/faculty/Amirthalingam_V.jpg"},
       {"role": "Faculty Member", "name": " Dr. Senthilkumar S ", "department": "School of Computer Science", "image": "/images/faculty/Senthilkumar_s.jpg"},
       {"role": "Faculty Member", "name": "Dr. Rajanarayanan S  ", "department": "School of Computer Science", "image": "/images/faculty/Rajanarayanan_S.jpg"},

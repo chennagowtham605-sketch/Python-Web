@@ -103,7 +103,7 @@ class PublicAccessTests(unittest.TestCase):
             ],
             [
                 ("Python 100", "2025", "ended"),
-                ("Week one Pyquest 2026", "16/10/2026", None),
+                ("Week one Pyquest 2026", "16/10/2026", "ended"),
             ],
         )
         self.assertEqual(dataset["events"][0]["venue"], "HITECH 2")
@@ -150,7 +150,7 @@ class PublicAccessTests(unittest.TestCase):
             urllib.request.urlopen(self.base_url + "/api/data").read()
         )
         faculty = dataset["team"]["facultyMembers"]
-        self.assertEqual(len(faculty), 21)
+        self.assertEqual(len(faculty), 22)
         photo_names = {
             member["name"].strip(): member["image"]
             for member in faculty
@@ -159,6 +159,7 @@ class PublicAccessTests(unittest.TestCase):
         self.assertEqual(
             photo_names,
             {
+                "Dr. Nithya M": "/images/faculty/Nithya_M.jpg",
                 "Dr. Amirthalingam V": "/images/faculty/Amirthalingam_V.jpg",
                 "Dr. Senthilkumar S": "/images/faculty/Senthilkumar_s.jpg",
                 "Dr. Rajanarayanan S": "/images/faculty/Rajanarayanan_S.jpg",
@@ -292,7 +293,25 @@ class PublicAccessTests(unittest.TestCase):
         }
         with tempfile.TemporaryDirectory() as directory:
             registration_file = Path(directory) / "event_registrations.json"
-            with patch.object(main, "EVENT_REGISTRATIONS_FILE", registration_file):
+            content_file = Path(directory) / "club_content.json"
+            content_file.write_text(
+                json.dumps(
+                    {
+                        "events": [
+                            {
+                                "title": payload["event"],
+                                "date": "To be announced",
+                                "venue": "To be announced",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with (
+                patch.object(main, "CLUB_CONTENT_FILE", content_file),
+                patch.object(main, "EVENT_REGISTRATIONS_FILE", registration_file),
+            ):
                 response = self.post("/api/events/register", payload)
                 duplicate = self.post("/api/events/register", payload)
                 saved = json.loads(registration_file.read_text(encoding="utf-8"))
