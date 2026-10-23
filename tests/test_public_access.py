@@ -89,6 +89,20 @@ class PublicAccessTests(unittest.TestCase):
                 )
                 self.assertTrue(response.read())
 
+    def test_button_effect_assets_are_served(self):
+        expected_types = {
+            "/css/button-effects.css": "text/css",
+            "/js/button-effects.js": "text/javascript",
+        }
+        for path, expected_type in expected_types.items():
+            with self.subTest(path=path):
+                response = urllib.request.urlopen(self.base_url + path)
+                self.assertEqual(response.status, 200)
+                self.assertEqual(
+                    response.headers.get_content_type(), expected_type
+                )
+                self.assertTrue(response.read())
+
     def test_public_dataset_contains_site_content(self):
         response = urllib.request.urlopen(self.base_url + "/api/data")
         dataset = json.loads(response.read())

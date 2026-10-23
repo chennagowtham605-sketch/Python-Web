@@ -95,6 +95,10 @@ PUBLIC_IMAGE_FILES = {
     **FACULTY_PHOTO_FILES,
     **PROJECT_IMAGE_FILES,
 }
+PUBLIC_ASSET_FILES = {
+    "/css/button-effects.css": ROOT / "css" / "button-effects.css",
+    "/js/button-effects.js": ROOT / "js" / "button-effects.js",
+}
 HOST = os.environ.get("HOST", "0.0.0.0")
 PORT = int(os.environ.get("PORT", "8080"))
 
@@ -341,6 +345,24 @@ class ClubSiteHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         path = unquote(urlparse(self.path).path)
+        if path in PUBLIC_ASSET_FILES:
+            try:
+                asset = PUBLIC_ASSET_FILES[path].read_bytes()
+            except OSError:
+                self._json(404, {"error": "Asset not found"})
+                return
+            content_type = (
+                "text/css; charset=utf-8"
+                if Path(path).suffix == ".css"
+                else "text/javascript; charset=utf-8"
+            )
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.send_header("Content-Length", str(len(asset)))
+            self.end_headers()
+            self.wfile.write(asset)
+            return
         if path in PUBLIC_IMAGE_FILES:
             try:
                 image = PUBLIC_IMAGE_FILES[path].read_bytes()
