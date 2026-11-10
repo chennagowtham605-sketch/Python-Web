@@ -25,6 +25,7 @@ CLUB_CONTENT_FILE = DATA_DIR / "club_content.json"
 EVENT_POSTER_FILES = {
     "/images/python-100-poster.jpg": ROOT / "images" / "python-100-poster.jpg",
     "/images/week-one-pyquest-2026.jpg": ROOT / "images" / "week-one-pyquest-2026.jpg",
+    "/images/week-two-pymystery-2026.png": ROOT / "images" / "week-two-pymystery-2026.png",
 }
 TEAM_PHOTO_FILES = {
     f"/images/team/{filename}": ROOT / "images" / "team" / filename
@@ -85,6 +86,11 @@ PROJECT_IMAGE_FILES = {
         "Smart Traffic Management System.jpg",
     )
 }
+GALLERY_IMAGE_FILES = {}
+if (ROOT / "images" / "gallery").is_dir():
+    for _img in (ROOT / "images" / "gallery").iterdir():
+        if _img.is_file() and _img.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
+            GALLERY_IMAGE_FILES[f"/images/gallery/{_img.name}"] = _img
 PUBLIC_IMAGE_FILES = {
     "/images/vmkvec-logo.png": ROOT / "images" / "vmkvec-logo.png",
     "/images/vmrf-logo.jpeg": ROOT / "images" / "vmrf-logo.jpeg",
@@ -94,6 +100,7 @@ PUBLIC_IMAGE_FILES = {
     **TEAM_PHOTO_FILES,
     **FACULTY_PHOTO_FILES,
     **PROJECT_IMAGE_FILES,
+    **GALLERY_IMAGE_FILES,
 }
 PUBLIC_ASSET_FILES = {
     "/css/button-effects.css": ROOT / "css" / "button-effects.css",

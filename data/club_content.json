@@ -52,6 +52,14 @@
       "venue": "AILAB",
       "status": "ended",
       "image": "/images/week-one-pyquest-2026.jpg"
+    },
+    {
+      "title": "Week two PyMystery 2026",
+      "description": "Week two of Pyquest 2026: PyMystery.",
+      "date": "17/10/2026",
+      "venue": "AILAB",
+      "status": "ended",
+      "image": "/images/week-two-pymystery-2026.png"
     }
   ],
   "projects": [

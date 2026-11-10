@@ -118,15 +118,20 @@ class PublicAccessTests(unittest.TestCase):
             [
                 ("Python 100", "2025", "ended"),
                 ("Week one Pyquest 2026", "16/10/2026", "ended"),
+                ("Week two PyMystery 2026", "17/10/2026", "ended"),
             ],
         )
         self.assertEqual(dataset["events"][0]["venue"], "HITECH 2")
         self.assertEqual(dataset["events"][1]["venue"], "AILAB")
+        self.assertEqual(dataset["events"][2]["venue"], "AILAB")
         self.assertEqual(
             dataset["events"][0]["image"], "/images/python-100-poster.jpg"
         )
         self.assertEqual(
             dataset["events"][1]["image"], "/images/week-one-pyquest-2026.jpg"
+        )
+        self.assertEqual(
+            dataset["events"][2]["image"], "/images/week-two-pymystery-2026.png"
         )
         self.assertTrue(dataset["projects"])
         self.assertTrue(dataset["team"])
@@ -142,6 +147,15 @@ class PublicAccessTests(unittest.TestCase):
                 self.assertEqual(response.status, 200)
                 self.assertEqual(response.headers.get_content_type(), "image/jpeg")
                 self.assertTrue(response.read().startswith(b"\xff\xd8\xff"))
+
+    def test_week_two_pymystery_poster_is_served_as_png(self):
+        response = urllib.request.urlopen(
+            self.base_url + "/images/week-two-pymystery-2026.png"
+        )
+
+        self.assertEqual(response.status, 200)
+        self.assertEqual(response.headers.get_content_type(), "image/png")
+        self.assertTrue(response.read().startswith(b"\x89PNG\r\n\x1a\n"))
 
     def test_student_team_photos_are_served_with_their_original_names(self):
         dataset = json.loads(
